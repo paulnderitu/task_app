@@ -28,6 +28,19 @@
       <button type="submit">Add task</button>
     </form>
 
+    <% @tasks.each() do |task|%>
+    <li><%= task.description %><a href="/tasks/<%= task.id()%>/edit">Update this task's description</a></li>
+    <% end %>
+
+<h1>Here are all your tasks:</h1>
+
+<ul>
+  <% @tasks.not_done().each do |task| %>
+    <li><%= task.description %></li>
+  <% end %>
+</ul>
+
+
 
     <% if @lists.any?() %>
     <p>Click on a list to see its tasks:</p>
@@ -40,7 +53,3 @@
     <% else %>
     <p>There are no lists yet!</p>
     <% end %>
-    <!-- <div class="container">
-    <a href="/lists">View All Lists</a>
-    <a href="/lists/new">Add New List</a>
-  </div> -->

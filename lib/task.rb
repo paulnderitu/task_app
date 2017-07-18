@@ -1,27 +1,15 @@
-class Task
-    attr_reader(:description, :list_id)
+class Task < ActiveRecord::Base
+  belongs_to(:list)
+    validates(:description, {:presence => true, :length => {:maximum => 50}})
+    before_save(:downcase_description)
 
-    define_method(:initialize) do |attributes|
-      @description = attributes.fetch(:description)
-      @list_id = attributes.fetch(:list_id)
-    end
+    scope(:not_done, -> do
+      where({:done => false})
+    end)
 
-    define_singleton_method(:all) do
-      returned_tasks = DB.exec("SELECT * FROM tasks;")
-      tasks = []
-      returned_tasks.each() do |task|
-        description = task.fetch("description")
-        list_id = task.fetch("list_id").to_i() # The information comes out of the database as a string.
-        tasks.push(Task.new({:description => description, :list_id => list_id}))
-      end
-      tasks
-    end
+  private
 
-    define_method(:save) do
-    DB.exec("INSERT INTO tasks (description, list_id) VALUES ('#{@description}', #{@list_id});")
-  end
-
-    define_method(:==) do |another_task|
-      self.description().==(another_task.description()).&(self.list_id().==(another_task.list_id()))
+    define_method(:downcase_description) do
+      self.description=(description().downcase())
     end
 end

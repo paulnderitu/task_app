@@ -7,7 +7,6 @@ set(:show_exceptions, false)
  describe('adding a new list', {:type => :feature}) do
    it('allows a user to click a list to see the tasks and details for it') do
      visit('/')
-    #  click_link('Add New List')
      fill_in('name', :with => 'Moringaschool Work')
      click_button('Add list')
      expect(page).to have_content('Welcome to the To Do App')
@@ -19,7 +18,6 @@ set(:show_exceptions, false)
        list = List.new({:name => 'Moringaschool Homework', :id => nil})
        list.save()
        visit('/')
-      #  click_link('View All Lists')
        expect(page).to have_content(list.name)
      end
    end
