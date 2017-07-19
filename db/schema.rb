@@ -24,10 +24,10 @@ ActiveRecord::Schema.define(version: 20170715100937) do
   create_table "tasks", force: :cascade do |t|
     t.string "description"
     t.boolean "done"
+    t.integer "list_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "due_date"
-    t.integer "list_id"
   end
 
 end

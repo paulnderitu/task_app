@@ -5,6 +5,5 @@ class CreateLists < ActiveRecord::Migration[5.1]
 
       t.timestamps()
     end
-    add_column(:tasks, :list_id, :integer)
   end
 end
